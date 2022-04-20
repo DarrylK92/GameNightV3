@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import logo from '../../img/logo.png';
 
 const Landing = ({ isAuthenticated }) => {
   var button;
@@ -19,7 +20,10 @@ const Landing = ({ isAuthenticated }) => {
     <section className="landing">
       <div className="dark-overlay">
         <div className="landing-inner">
-          <h1 className="x-large">Community Site</h1>
+          <div class="container">
+            <img src={logo} />
+          </div>
+          <h1 className="x-large">DK Game Night</h1>
           <div className="buttons">{button}</div>
         </div>
       </div>
