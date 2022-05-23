@@ -8,12 +8,12 @@ import PropTypes from 'prop-types';
 const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
+    username: '',
     password: '',
     password2: ''
   });
 
-  const { name, email, password, password2 } = formData;
+  const { name, username, password, password2 } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,7 +23,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     if (password !== password2) {
       setAlert('Passwords do not match', 'danger');
     } else {
-      register({ name, email, password });
+      register({ name, username, password });
     }
   };
 
@@ -46,19 +46,17 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             value={name}
             onChange={onChange}
           />
+          { name !== '' && <small className="form-text">Name</small> }
         </div>
         <div className="form-group">
           <input
-            type="email"
-            placeholder="Email Address"
-            name="email"
-            value={email}
+            type="text"
+            placeholder="Username"
+            name="username"
+            value={username}
             onChange={onChange}
           />
-          <small className="form-text">
-            This site uses Gravatar so if you want a profile image, use a
-            Gravatar email
-          </small>
+          { username !== '' && <small className="form-text">Username</small> }
         </div>
         <div className="form-group">
           <input
@@ -68,15 +66,17 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             value={password}
             onChange={onChange}
           />
+          { password !== '' && <small className="form-text">Password</small> }
         </div>
         <div className="form-group">
           <input
             type="password"
-            placeholder="Confirm Password"
+            placeholder="Confirm password"
             name="password2"
             value={password2}
             onChange={onChange}
           />
+          { password2 !== '' && <small className="form-text">Confirm password</small> }
         </div>
         <input type="submit" className="btn btn-primary" value="Register" />
       </form>

@@ -7,6 +7,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import Alert from './components/layout/Alert';
 import NotFound from './components/layout/NotFound';
 import PrivateRoute from './components/routing/PrivateRoute';
+import Register from './components/auth/Register';
 import { LOGOUT } from './actions/types';
 
 // Redux
@@ -47,6 +48,7 @@ const App = () => {
             element={<PrivateRoute component={Dashboard} />}
           />
           <Route path="/*" element={<NotFound />} />
+          <Route path="register" element={<Register />} />
         </Routes>
       </Router>
     </Provider>
