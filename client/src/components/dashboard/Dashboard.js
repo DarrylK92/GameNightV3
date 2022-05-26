@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
 import { getOpenEvents } from '../../actions/event';
+import Events from './Events';
 
 const Dashboard = ({ getOpenEvents, auth: { user }, event: { loading } }) => {
   useEffect(() => {
@@ -25,6 +26,8 @@ const Dashboard = ({ getOpenEvents, auth: { user }, event: { loading } }) => {
       {loading === false ? (
         <>
           <DashboardActions />
+
+          <Events />
         </>
       ) : (
         <></>
