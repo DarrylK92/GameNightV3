@@ -18,11 +18,8 @@ const EventSchema = new Schema({
     type: Date
   },
   closeDate: {
-    type: Date
-  },
-  description: {
-    type: String,
-    required: true
+    type: Date,
+    default: null
   },
   isOpen: {
     type: Boolean,
@@ -45,10 +42,12 @@ const EventSchema = new Schema({
     }
   ],
   amountOfVotes: {
-    type: Number
+    type: Number,
+    default: 0
   },
   amountVoted: {
-    type: Number
+    type: Number,
+    default: 0
   },
   winner: {
     type: Schema.Types.ObjectId,
