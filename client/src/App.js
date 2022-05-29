@@ -8,6 +8,7 @@ import Alert from './components/layout/Alert';
 import NotFound from './components/layout/NotFound';
 import PrivateRoute from './components/routing/PrivateRoute';
 import Register from './components/auth/Register';
+import EventForm from './components/event/EventForm';
 import { LOGOUT } from './actions/types';
 
 // Redux
@@ -49,6 +50,14 @@ const App = () => {
           />
           <Route path="/*" element={<NotFound />} />
           <Route path="register" element={<Register />} />
+          <Route
+            path="create-event"
+            element={<PrivateRoute component={EventForm} />}
+          />
+          <Route
+            path="edit-event/:id"
+            element={<PrivateRoute component={EventForm} />}
+          />
         </Routes>
       </Router>
     </Provider>
