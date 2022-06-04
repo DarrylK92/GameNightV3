@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const GameSchema = new Schema({
   name: String,
   isEnabled: Boolean,
-  owner: {
+  ownerId: {
     type: Schema.Types.ObjectId,
     ref: 'user'
   }
