@@ -3,6 +3,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createEvent, getEvent } from '../../actions/event';
+import { getGames } from '../../actions/game';
+import Games from '../game/Games';
 const moment = require('moment');
 
 let initialState = {
@@ -10,7 +12,12 @@ let initialState = {
   autoCloseDate: ''
 };
 
-const AddEvent = ({ createEvent, getEvent, event: { event, loading } }) => {
+const AddEvent = ({
+  createEvent,
+  getEvent,
+  getGames,
+  event: { event, loading }
+}) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState(initialState);
 
@@ -33,8 +40,10 @@ const AddEvent = ({ createEvent, getEvent, event: { event, loading } }) => {
 
         setFormData(eventData);
       }
+    } else {
+      getGames();
     }
-  }, [loading, getEvent, event]);
+  }, [loading, getEvent, event, getGames]);
 
   const { name, autoCloseDate } = formData;
 
@@ -84,6 +93,13 @@ const AddEvent = ({ createEvent, getEvent, event: { event, loading } }) => {
             />
           </div>
         </div>
+        {loading === false ? (
+          <>
+            <Games />
+          </>
+        ) : (
+          <></>
+        )}
         <input type="submit" className="btn btn-primary my-1" />
         <Link className="btn btn-light my-1" to="/dashboard">
           Go Back
@@ -96,11 +112,15 @@ const AddEvent = ({ createEvent, getEvent, event: { event, loading } }) => {
 AddEvent.propTypes = {
   createEvent: PropTypes.func.isRequired,
   getEvent: PropTypes.func.isRequired,
+  getGames: PropTypes.func.isRequired,
   event: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  event: state.event
+  event: state.event,
+  game: state.game
 });
 
-export default connect(mapStateToProps, { createEvent, getEvent })(AddEvent);
+export default connect(mapStateToProps, { createEvent, getEvent, getGames })(
+  AddEvent
+);
