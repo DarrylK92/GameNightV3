@@ -14,3 +14,4 @@ export const GET_EVENT = 'GET_EVENT';
 export const GET_EVENTS = 'GET_EVENTS';
 export const EVENT_ERROR = 'EVENT_ERROR';
 export const CLEAR_EVENT = 'CLEAR_EVENT';
+export const GET_GAMES = 'GET_GAMES';
