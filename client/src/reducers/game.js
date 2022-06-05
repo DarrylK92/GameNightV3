@@ -1,4 +1,4 @@
-import { GET_GAMES } from '../actions/types';
+import { GET_GAMES, UPDATE_GAME_IS_ENABLED } from '../actions/types';
 
 const initialState = {
   games: [],
@@ -15,6 +15,16 @@ function gameReducer(state = initialState, action) {
       return {
         ...state,
         games: payload,
+        loading: false
+      };
+    case UPDATE_GAME_IS_ENABLED:
+      let newGames = state.games;
+      let foundGame = newGames.find((element) => (element._id = payload));
+      foundGame.isEnabled = !foundGame.isEnabled;
+
+      return {
+        ...state,
+        games: newGames,
         loading: false
       };
     default:

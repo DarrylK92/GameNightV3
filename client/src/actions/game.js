@@ -1,7 +1,7 @@
 import api from '../utils/api';
 import { setAlert } from './alert';
 
-import { GET_GAMES } from './types';
+import { GET_GAMES, UPDATE_GAME_IS_ENABLED } from './types';
 
 //Get all open events
 export const getGames = () => async (dispatch) => {
@@ -11,6 +11,16 @@ export const getGames = () => async (dispatch) => {
     dispatch({
       type: GET_GAMES,
       payload: res.data
+    });
+  } catch (err) {}
+};
+
+//Update game isEnabled
+export const updateGameIsEnabled = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: UPDATE_GAME_IS_ENABLED,
+      payload: id
     });
   } catch (err) {}
 };
