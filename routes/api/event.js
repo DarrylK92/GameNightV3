@@ -7,6 +7,7 @@ const { check, validationResult } = require('express-validator');
 const checkObjectId = require('../../middleware/checkObjectId');
 
 const Event = require('../../models/Event');
+const User = require('../../models/User');
 
 async function closeAutoCloseEvents() {
   let events = await Event.find({ isOpen: true });
@@ -14,7 +15,11 @@ async function closeAutoCloseEvents() {
   var today = Date.now();
 
   toUpdateEvents = events.filter(function (obj) {
-    return obj.isOpen === true && obj.autoCloseDate < today;
+    return (
+      obj.isOpen === true &&
+      obj.autoCloseDate < today &&
+      obj.autoCloseDate !== null
+    );
   });
 
   toUpdateEvents.forEach((event) => {
@@ -74,7 +79,7 @@ router.post('/', auth, async (req, res) => {
 
     let event;
 
-    if (req.body._id !== '') {
+    if (req.body._id !== '' && req.body._id !== undefined) {
       try {
         event = await Event.findOneAndUpdate(
           { _id: req.body._id },
@@ -92,11 +97,20 @@ router.post('/', auth, async (req, res) => {
         return res.status(500).send('Server Error');
       }
     } else {
-      event = new Event({
-        name: req.body.name,
-        autoCloseDate: req.body.date,
-        games: req.body.games
-      });
+      if (req.body.date === undefined) {
+        event = new Event({
+          name: req.body.name,
+          games: req.body.games,
+          isOpen: true
+        });
+      } else {
+        event = new Event({
+          name: req.body.name,
+          autoCloseDate: req.body.date,
+          games: req.body.games,
+          isOpen: true
+        });
+      }
 
       event = await event.save();
     }
@@ -116,23 +130,22 @@ router.get(
   checkObjectId('event_id'),
   async ({ params: { event_id } }, res) => {
     try {
-      let event = await Event.findById(event_id).populate('createdBy', [
-        'name'
-      ])
-      .populate({
+      let event = await Event.findById(event_id)
+        .populate('createdBy', ['name'])
+        .populate({
           path: 'games',
           populate: {
-              path: 'game',
-              model: 'game'
+            path: 'game',
+            model: 'game'
           }
-      })
-      .populate({
+        })
+        .populate({
           path: 'votes',
           populate: {
-              path: 'vote',
-              model: 'vote'
+            path: 'vote',
+            model: 'vote'
           }
-      });
+        });
 
       if (!event) {
         return res.status(404).json({ msg: 'Event not found' });
