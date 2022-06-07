@@ -29,14 +29,16 @@ const Events = ({ event: { events }, auth: { user } }) => {
               </button>
             </td>
             {user.isAdmin === true && (
-              <>
-                <Link
-                  to={'/event/' + oneEvent._id}
-                  state={{ backUrl: '/dashboard' }}
-                >
-                  Edit
-                </Link>
-              </>
+              <td>
+                <button className="btn btn-secondary">
+                  <Link
+                    to={'/event/' + oneEvent._id}
+                    state={{ backUrl: '/dashboard' }}
+                  >
+                    Edit
+                  </Link>
+                </button>
+              </td>
             )}
           </tr>
         </>
