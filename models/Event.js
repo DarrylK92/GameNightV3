@@ -15,7 +15,8 @@ const EventSchema = new Schema({
     default: Date.now
   },
   autoCloseDate: {
-    type: Date
+    type: Date,
+    default: null
   },
   closeDate: {
     type: Date,
