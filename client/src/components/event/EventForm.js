@@ -16,7 +16,8 @@ const AddEvent = ({
   createEvent,
   getEvent,
   getGames,
-  event: { event, loading }
+  event: { event, loading },
+  game: { games }
 }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState(initialState);
@@ -65,6 +66,7 @@ const AddEvent = ({
         className="form"
         onSubmit={(e) => {
           e.preventDefault();
+          formData.games = games.filter((game) => game.isEnabled === true);
 
           if (id !== null && id !== undefined) {
             createEvent(formData, navigate, true);
@@ -113,7 +115,8 @@ AddEvent.propTypes = {
   createEvent: PropTypes.func.isRequired,
   getEvent: PropTypes.func.isRequired,
   getGames: PropTypes.func.isRequired,
-  event: PropTypes.object.isRequired
+  event: PropTypes.object.isRequired,
+  game: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
