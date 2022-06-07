@@ -1,6 +1,8 @@
 function formatDate(date) {
-    return new Intl.DateTimeFormat().format(new Date(date));
+  if (date === null) {
+    return '';
   }
-  
-  export default formatDate;
-  
+  return new Intl.DateTimeFormat().format(new Date(date));
+}
+
+export default formatDate;
