@@ -70,3 +70,10 @@ export const getEvent = (id) => async (dispatch) => {
     });
   }
 };
+
+//Clear loaded event
+export const clearEvent = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_EVENT
+  });
+};
