@@ -32,7 +32,7 @@ const Events = ({ event: { events }, auth: { user } }) => {
               <td>
                 <button className="btn btn-secondary">
                   <Link
-                    to={'/event/' + oneEvent._id}
+                    to={'/edit-event/' + oneEvent._id}
                     state={{ backUrl: '/dashboard' }}
                   >
                     Edit
