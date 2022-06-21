@@ -4,17 +4,23 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
-import { getOpenEvents } from '../../actions/event';
+import { getOpenEvents, clearEvent } from '../../actions/event';
 import Events from './Events';
 
-const Dashboard = ({ getOpenEvents, auth: { user }, event: { loading } }) => {
+const Dashboard = ({
+  getOpenEvents,
+  clearEvent,
+  auth: { user },
+  event: { loading }
+}) => {
   useEffect(() => {
     getOpenEvents();
+    clearEvent();
 
     if (user === null) {
       window.location.reload(false);
     }
-  }, [getOpenEvents]);
+  }, [getOpenEvents, clearEvent]);
 
   return (
     <section className="container">
@@ -38,6 +44,7 @@ const Dashboard = ({ getOpenEvents, auth: { user }, event: { loading } }) => {
 
 Dashboard.propTypes = {
   getOpenEvents: PropTypes.func.isRequired,
+  clearEvent: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
 
@@ -46,4 +53,6 @@ const mapStateToProps = (state) => ({
   event: state.event
 });
 
-export default connect(mapStateToProps, { getOpenEvents })(Dashboard);
+export default connect(mapStateToProps, { getOpenEvents, clearEvent })(
+  Dashboard
+);
