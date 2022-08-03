@@ -8,6 +8,7 @@ const checkObjectId = require('../../middleware/checkObjectId');
 
 const Event = require('../../models/Event');
 const User = require('../../models/User');
+const Vote = require('../../models/Vote');
 
 async function closeAutoCloseEvents() {
   let events = await Event.find({ isOpen: true });
@@ -101,14 +102,16 @@ router.post('/', auth, async (req, res) => {
         event = new Event({
           name: req.body.name,
           games: req.body.games,
-          isOpen: true
+          isOpen: true,
+          createdBy: req.user.id
         });
       } else {
         event = new Event({
           name: req.body.name,
           autoCloseDate: req.body.date,
           games: req.body.games,
-          isOpen: true
+          isOpen: true,
+          createdBy: req.user.id
         });
       }
 
@@ -134,10 +137,16 @@ router.get(
         .populate('createdBy', ['name'])
         .populate({
           path: 'games',
-          populate: {
-            path: 'game',
-            model: 'game'
-          }
+          populate: [
+            {
+              path: '_id',
+              model: 'game'
+            },
+            {
+              path: '_id.ownerId',
+              model: 'user'
+            }
+          ]
         })
         .populate({
           path: 'votes',
