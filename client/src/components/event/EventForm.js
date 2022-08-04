@@ -9,7 +9,8 @@ const moment = require('moment');
 
 let initialState = {
   name: '',
-  autoCloseDate: ''
+  autoCloseDate: '',
+  _id: ''
 };
 
 const AddEvent = ({
@@ -69,6 +70,7 @@ const AddEvent = ({
           formData.games = games.filter((game) => game.isEnabled === true);
 
           if (id !== null && id !== undefined) {
+            setFormData({ ...formData, _id: id });
             createEvent(formData, navigate, true);
           } else {
             createEvent(formData, navigate);
