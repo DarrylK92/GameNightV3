@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createEvent, getEvent } from '../../actions/event';
-import { getGames } from '../../actions/game';
+import { getGames, updateDBGamesIsEnabled } from '../../actions/game';
 import Games from '../game/Games';
 const moment = require('moment');
 
@@ -67,12 +67,16 @@ const AddEvent = ({
         className="form"
         onSubmit={(e) => {
           e.preventDefault();
-          formData.games = games.filter((game) => game.isEnabled === true);
 
-          if (id !== null && id !== undefined) {
+          const isEditing = id !== null && id !== undefined;
+
+          formData.games = games;
+
+          if (isEditing) {
             setFormData({ ...formData, _id: id });
             createEvent(formData, navigate, true);
           } else {
+            updateDBGamesIsEnabled(formData.games);
             createEvent(formData, navigate);
           }
         }}
@@ -117,6 +121,7 @@ AddEvent.propTypes = {
   createEvent: PropTypes.func.isRequired,
   getEvent: PropTypes.func.isRequired,
   getGames: PropTypes.func.isRequired,
+  updateDBGamesIsEnabled: PropTypes.func.isRequired,
   event: PropTypes.object.isRequired,
   game: PropTypes.object.isRequired
 };
@@ -126,6 +131,9 @@ const mapStateToProps = (state) => ({
   game: state.game
 });
 
-export default connect(mapStateToProps, { createEvent, getEvent, getGames })(
-  AddEvent
-);
+export default connect(mapStateToProps, {
+  createEvent,
+  getEvent,
+  getGames,
+  updateDBGamesIsEnabled
+})(AddEvent);
