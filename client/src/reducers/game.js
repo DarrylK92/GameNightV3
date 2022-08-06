@@ -19,7 +19,7 @@ function gameReducer(state = initialState, action) {
       };
     case UPDATE_GAME_IS_ENABLED:
       let newGames = state.games;
-      let foundGame = newGames.find((element) => (element._id = payload));
+      let foundGame = newGames.find((element) => (element._id == payload));
       foundGame.isEnabled = !foundGame.isEnabled;
 
       return {
