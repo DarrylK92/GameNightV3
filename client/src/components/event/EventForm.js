@@ -25,6 +25,8 @@ const AddEvent = ({
 
   const { id } = useParams();
   useEffect(() => {
+    getGames();
+
     if (id !== null && id !== undefined) {
       if (event === null) {
         getEvent(id);
@@ -42,8 +44,6 @@ const AddEvent = ({
 
         setFormData(eventData);
       }
-    } else {
-      getGames();
     }
   }, [loading, getEvent, event, getGames]);
 
