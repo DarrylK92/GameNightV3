@@ -24,3 +24,12 @@ export const updateGameIsEnabled = (id) => async (dispatch) => {
     });
   } catch (err) {}
 };
+
+//Updates isEnabled properties on games on db
+export const updateDBGamesIsEnabled = async (games) => {
+  try {
+    await api.post(`/games/`, games);
+  } catch (err) {
+    console.log(err);
+  }
+};
