@@ -27,4 +27,40 @@ router.get('/', async (req, res) => {
   }
 });
 
+// @route    POST api/games/
+// @desc     Updates game state on db
+// @access   Private
+router.post('/', auth, async (req, res) => {
+  try {
+    let games = req.body;
+
+    for (game in games) {
+      if (games[game].isEnabled !== games[game].initialIsEnabled) {
+        try {
+          gameFromDB = await Game.findOneAndUpdate(
+            { name: games[game].name },
+            {
+              $set: {
+                isEnabled: games[game].isEnabled
+              }
+            },
+            { new: true, upsert: true, setDefaultsOnInsert: true }
+          );
+        } catch (err) {
+          console.error(err.message);
+          return res.status(500).send('Server Error');
+        }
+
+        gameFromDB = await gameFromDB.save();
+      }
+    }
+
+    res.json(gameFromDB);
+  } catch (err) {
+    console.error(err.message);
+
+    res.status(500).send('Server Error');
+  }
+});
+
 module.exports = router;
