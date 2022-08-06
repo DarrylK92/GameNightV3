@@ -15,6 +15,10 @@ router.get('/', async (req, res) => {
   try {
     let games = await Game.find().populate('ownerId', ['name']).sort('name');
 
+    for (game in games) {
+      games[game].initialIsEnabled = games[game].isEnabled;
+    }
+
     res.json(games);
   } catch (err) {
     console.error(err.message);
