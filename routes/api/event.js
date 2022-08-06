@@ -80,6 +80,8 @@ router.post('/', auth, async (req, res) => {
 
     let event;
 
+    req.body.games = req.body.games.filter((game) => game.isEnabled === true);
+
     if (req.body._id !== '' && req.body._id !== undefined) {
       try {
         event = await Event.findOneAndUpdate(
