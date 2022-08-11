@@ -18,7 +18,6 @@ const Games = ({
   let isEditing = false;
 
   if (event !== null) {
-    gamesList = event.games;
     isEditing = true;
   }
 
@@ -49,14 +48,14 @@ const Games = ({
       } else {
         gamesContent = gamesList.map((oneGame) => (
           <>
-            <tr key={oneGame._id._id}>
-              <td>{oneGame._id.name}</td>
+            <tr key={oneGame._id}>
+              <td>{oneGame.name}</td>
               <td>
                 <input
                   type="checkbox"
-                  defaultChecked={oneGame._id.isEnabled}
+                  defaultChecked={oneGame.isEnabled}
                   onChange={(e) => {
-                    toggleValue(oneGame._id._id);
+                    toggleValue(oneGame._id);
                   }}
                 ></input>
               </td>
